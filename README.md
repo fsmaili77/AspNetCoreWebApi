@@ -15,7 +15,7 @@ ASP.NET Core Web API is a framework for building web services and RESTful APIs u
 
 ASP.NET Core Web API is a versatile framework for building web services, and it's widely used for creating APIs that serve a variety of applications and platforms. It is a part of the broader ASP.NET Core ecosystem, which provides tools and libraries for building modern web applications and services.
 
-## The flow of creation of ASP.NET Core Web API applications:
+## The flow for creation of ASP.NET Core Web API applications:
 1.	**Install essential packages:** 
      -	Microsoft.EntityFrameworkCore.SqlServer
      -	Microsoft.EntityFrameworkCore.Tools
