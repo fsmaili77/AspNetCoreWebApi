@@ -27,4 +27,32 @@ ASP.NET Core Web API is a versatile framework for building web services, and it'
 7.	**Update Database** (PM> Update-Database)
 8.	**Add Controllers**
 
+## Swager 
+Swagger is a tool that helps you document and test APIs by providing a user-friendly interface. In ASP.NET Core, you can integrate Swagger using the Swashbuckle library, which is a popular package for generating Swagger documentation for your web APIs.
+Here's how you can add Swagger to an ASP.NET Core project:
+
+**Install packages:**
+1.	Microsoft.AspNetCore.OpenApi
+2.	Swashbuckle.AspNetCore
+
+
+**Configure Swagger:**
+
+In Program.cs class we need to add:
+1.	builder.Services.AddEndpointsApiExplorer()
+2.	builder.Services.AddSwaggerGen()
+3.	app.UseSwagger()
+4.	app.UseSwaggerUI() 
+5. Add XML Documentation (Optional):
+Add the configuration in Program.cs class. Build the application and the file api.xml will be created in the root directory.
+
+![image](https://github.com/fsmaili77/AspNetCoreWebApi/assets/65200251/f950555d-47b3-4dd9-bf2a-b61118309c98)
+
+   
+ **Swagger v1 and v2**
+ 
+
+
+![CPT2309251720-1430x706 (2)](https://github.com/fsmaili77/AspNetCoreWebApi/assets/65200251/de4b6e84-6b9b-42f6-abdc-1b704ae61ce6)
+
 
