@@ -51,6 +51,16 @@ builder.Services.AddVersionedApiExplorer(options =>
     options.SubstituteApiVersionInUrl = true;
 });
 
+//CORS
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.WithOrigins("http://localhost:4200");
+    });
+}); 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -65,6 +75,10 @@ app.UseSwaggerUI( options =>
     options.SwaggerEndpoint("/swagger/v1/swagger.json", "1.0");
     options.SwaggerEndpoint("/swagger/v2/swagger.json", "2.0");
 }); // testing Web API endpoints / action methods
+
+app.UseRouting();
+
+app.UseCors();
 
 app.UseAuthorization();
 
