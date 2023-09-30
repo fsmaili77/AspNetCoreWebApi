@@ -23,7 +23,7 @@ namespace CitiesManagerWebAPI.Controllers.v1
             _roleManager = roleManager;
         }
 
-        [HttpPost]
+        [HttpPost("register")]
         public async Task<ActionResult<ApplicationUser>> PostRegister(RegisterDTO registerDTO)
         {
             //Validation
