@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace CitiesManagerWebAPI.Controllers.v1
 {
+    /// <summary>
+    /// Account Controller class which derives from CustomControllerBase class
+    /// </summary>
     [AllowAnonymous]
     [ApiVersion("1.0")]
     public class AccountController : CustomControllerBase
@@ -16,6 +19,12 @@ namespace CitiesManagerWebAPI.Controllers.v1
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<ApplicationRole> _roleManager;
 
+        /// <summary>
+        /// AccountController constructor
+        /// </summary>
+        /// <param name="userManager"></param>
+        /// <param name="signInManager"></param>
+        /// <param name="roleManager"></param>
         public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<ApplicationRole> roleManager)
         {
             _userManager = userManager;
@@ -23,6 +32,11 @@ namespace CitiesManagerWebAPI.Controllers.v1
             _roleManager = roleManager;
         }
 
+        /// <summary>
+        /// Method to register new user
+        /// </summary>
+        /// <param name="registerDTO"></param>
+        /// <returns></returns>
         [HttpPost("register")]
         public async Task<ActionResult<ApplicationUser>> PostRegister(RegisterDTO registerDTO)
         {
@@ -58,6 +72,11 @@ namespace CitiesManagerWebAPI.Controllers.v1
             }
         }
 
+        /// <summary>
+        /// Check if email exists in the database
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> IsEmailAlreadyRegistered(string email)
         {
@@ -72,6 +91,52 @@ namespace CitiesManagerWebAPI.Controllers.v1
                 return Ok(false);
             }
         }
+
+        /// <summary>
+        /// Login registered user
+        /// </summary>
+        /// <param name="loginDTO"></param>
+        /// <returns></returns>
+        [HttpPost("login")]
+        public async Task<IActionResult> PostLogin(LoginDTO loginDTO)
+        {
+            //Validation
+            if (ModelState.IsValid == false)
+            {
+                string errorMessage = string.Join(" | ", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage));
+                return Problem(errorMessage);
+            }
+
+            var result = await _signInManager.PasswordSignInAsync(
+                loginDTO.Email,
+                loginDTO.Password,
+                isPersistent: false,
+                lockoutOnFailure: false);
+
+            if (result.Succeeded)
+            {
+                ApplicationUser? user = await _userManager.FindByEmailAsync(loginDTO.Email);
+                if (user == null)
+                {
+                    return NoContent();
+                }
+                return Ok(new { personName = user.PersonName, email = user.Email });
+            }
+            else
+            {
+                return Problem("Invalid email or password");
+            }
+        }
+
+        /// <summary>
+        /// Logout a user
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("logout")]
+        public async Task<ActionResult<ApplicationUser>> GetLogout()
+        {
+            await _signInManager.SignOutAsync();
+            return NoContent();
+        }
     }
-    
 }
