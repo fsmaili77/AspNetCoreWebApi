@@ -1,4 +1,6 @@
 using CitiesManager.Core.Identity;
+using CitiesManager.Core.ServiceContracts;
+using CitiesManager.Core.Services;
 using CitiesManager.Infrastructure.DatabaseContext;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -16,6 +18,8 @@ builder.Services.AddControllers(options =>
     options.Filters.Add(new ConsumesAttribute("application/json")); //Request body content type return
 })
     .AddXmlSerializerFormatters();
+
+builder.Services.AddTransient<IJwtService, JwtService>();
 
 //Enable versioning in Web API controllers
 builder.Services.AddApiVersioning(config =>

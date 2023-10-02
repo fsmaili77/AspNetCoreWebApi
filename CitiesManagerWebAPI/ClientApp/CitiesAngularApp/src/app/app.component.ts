@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  title = 'CitiesAngularApp'; 
 
   constructor(public accountService: AccountService, private router: Router) { }
 

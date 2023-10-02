@@ -53,10 +53,11 @@ export class RegisterComponent {
     if (this.registerForm.valid) {
 
       this.accountService.postRegister(this.registerForm.value).subscribe({
-        next: (response: RegisterUser) => {
+        next: (response: any) => {
           console.log(response);
 
           this.isRegisterFormSubmitted = false;
+          localStorage["token"] = response.token;
 
           this.router.navigate(['/cities']);
 
